@@ -38,19 +38,8 @@ public class SysUserServiceImpl implements SysUserService {
 
     @Override
     public PageResultDTO findPage(PageRequest pageRequest) {
-        return PageUtils.getPageResult(pageRequest, getPageInfo(pageRequest));
-    }
-
-    /**
-     * 调用分页插件完成分页
-     * @param pageRequest
-     * @return
-     */
-    private PageInfo<SysUserPo> getPageInfo(PageRequest pageRequest) {
-        int pageNum = pageRequest.getPageNum();
-        int pageSize = pageRequest.getPageSize();
-        PageHelper.startPage(pageNum, pageSize);
+        PageHelper.startPage(pageRequest.getPageNum(), pageRequest.getPageSize());
         List<SysUserPo> sysUserPos = sysUserMapper.selectAll();
-        return new PageInfo<SysUserPo>(sysUserPos);
+        return PageUtils.getPageResult(new PageInfo<>(sysUserPos));
     }
 }
